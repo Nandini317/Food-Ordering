@@ -1,12 +1,14 @@
 import axios from "axios";
 import { createContext, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+//import { food_list } from "../assets/frontend_assets/assets";
 
 export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
-  const url = "https://food-delivery-backend-5b6g.onrender.com";
+  //const url = "https://food-delivery-backend-5b6g.onrender.com";
+  const url = "http://localhost:4000";
   const [token, setToken] = useState("");
   const [food_list, setFoodList] = useState([]);
 
@@ -58,7 +60,8 @@ const StoreContextProvider = (props) => {
   };
 
   const fetchFoodList = async () => {
-    const response = await axios.get(url + "/api/food/list");
+    const response = await axios.get(url+"/api/food/list");
+    console.log(response);
     if (response.data.success) {
       setFoodList(response.data.data);
     } else {

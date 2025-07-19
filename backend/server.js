@@ -30,5 +30,6 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, () => {
+  console.log("MongoDB connected ")
   console.log(`Server Started on port: ${port}`);
 });
