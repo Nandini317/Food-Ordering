@@ -56,4 +56,28 @@ const removeFood = async (req, res) => {
   }
 };
 
-export { addFood, listFood, removeFood };
+const editFood = async (req, res) => {
+  try {
+    let userData = await userModel.findById(req.body.userId);
+    if (userData && userData.role === "admin") {
+      const food = await foodModel.findById(req.body.id);
+      if(req.file){
+        fs.unlink(`uploads/${food.image}`,()=>{})
+        food.image = req.file.filename; 
+      }
+      food.name = req.body.name || food.name;
+      food.description = req.body.description || food.description;
+      food.price = req.body.price || food.price;
+      food.category = req.body.category || food.category;
+      await food.save();
+      res.json({ success: true, message: "Food Updated" });   
+    } else {
+      res.json({ success: false, message: "You are not admin" });
+    }
+  } catch (error) {
+    console.log(error);
+    res.json({ success: false, message: "Error" });
+  }
+};
+
+export { addFood, listFood, removeFood ,editFood };
