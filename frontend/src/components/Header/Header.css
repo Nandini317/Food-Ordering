@@ -18,19 +18,19 @@
 }
 .header-contents h2{
     font-weight: 500;
-    color: white;
+    color: rgb(208, 50, 22);
     font-size: max(4.5vw,22px);
 }
 .header-contents p{
-    color: white;
+    color: (208, 50, 22);
     font-size: 1vw;
 }
 .header-contents button{
     border: none;
-    color: #747474;
+    color: white;
     font-weight: 500;
     padding: 1vw 2.3vw;
-    background-color: white;
+    background-color: rgb(208, 50, 22);
     font-size: max(1vw,13px);
     border-radius: 50px;
 }

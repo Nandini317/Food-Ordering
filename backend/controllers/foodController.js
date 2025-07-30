@@ -80,4 +80,35 @@ const editFood = async (req, res) => {
   }
 };
 
-export { addFood, listFood, removeFood ,editFood };
+const getfood = async(req , res) =>{
+  try{
+    const foodId = req.params.id ; 
+    const food = await foodModel.findById(foodId);
+    if(food){
+      res.json({ success: true,data : food ,  message: "Food Updated" })
+    }
+    else{
+      res.json({ success: false, message: "Food not found" })
+    }
+  }
+  catch(error){
+    console.log(error) ; 
+    res.json({ success: false, message: "Error" })
+  }
+}
+const updatefood = async (req, res) => {
+  const { id } = req.params;
+  const { name, description, price, category } = req.body;
+  const image = req.file ? req.file.filename : undefined;
+
+  try {
+    const updateData = { name, description, price, category };
+    if (image) updateData.image = image;
+
+    await foodModel.findByIdAndUpdate(id, updateData);
+    res.json({ success: true, message: "Food item updated successfully" });
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Update failed" });
+  }
+}
+export { addFood, listFood, removeFood ,editFood ,getfood ,updatefood};

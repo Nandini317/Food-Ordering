@@ -5,11 +5,17 @@
     padding: 8px 4%;
 }
 .navbar .logo{
-    width: max(10%,80px);
+    width: max(14%,80px);
 }
 .navbar .profile{
     width: 40px;
 }
 .login-conditon{
     font-size: 20px;
+    cursor: pointer;
+}
+
+.login-conditon:hover{
+    color : rgb(199, 54, 28)
+    
 }
