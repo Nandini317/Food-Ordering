@@ -9,6 +9,7 @@ import { useNavigate } from "react-router-dom";
 const List = ({ url }) => {
   const navigate = useNavigate();
   const { token,admin } = useContext(StoreContext);
+  const [categoryFilter, setCategoryFilter] = useState("All");
   const [list, setList] = useState([]);
 
   const fetchList = async () => {
@@ -49,6 +50,24 @@ const List = ({ url }) => {
   return (
     <div className="list add flex-col">
       <p>All Food List</p>
+      <div style={{ marginBottom: "20px" }}>
+  <label htmlFor="categoryFilter"><b>Filter by Category: </b></label>
+  <select
+    id="categoryFilter"
+    value={categoryFilter}
+    onChange={e => setCategoryFilter(e.target.value)}
+  >
+    <option value="All">All</option>
+    <option value="Salad">Salad</option>
+    <option value="Rolls">Rolls</option>
+    <option value="Deserts">Deserts</option>
+    <option value="Sandwich">Sandwich</option>
+    <option value="Cake">Cake</option>
+    <option value="Pure Veg">Pure Veg</option>
+    <option value="Pasta">Pasta</option>
+    <option value="Noodles">Noodles</option>
+  </select>
+</div>
       <div className="list-table">
         <div className="list-table-format title">
           <b>Image</b>
@@ -59,7 +78,8 @@ const List = ({ url }) => {
           <b>Delete</b>
 
         </div>
-        {list.map((item, index) => {
+        {list.filter(item => categoryFilter === "All" || item.category === categoryFilter)
+  .map((item, index) => {
           return (
             <div key={index} className="list-table-format">
               <img src={`${url}/images/` + item.image} alt="" />
