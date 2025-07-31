@@ -10,6 +10,7 @@ import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
 
 const Orders = ({ url }) => {
+  const [statusFilter, setStatusFilter] = useState("All");
   const navigate = useNavigate();
   const { token, admin } = useContext(StoreContext);
   const [orders, setOrders] = useState([]);
@@ -50,8 +51,22 @@ const Orders = ({ url }) => {
   return (
     <div className="order add">
       <h3>Order Page</h3>
+      <div style={{ marginBottom: "20px" }}>
+        <label htmlFor="statusFilter"><b>Filter by Status: </b></label>
+        <select
+          id="statusFilter"
+          value={statusFilter}
+          onChange={e => setStatusFilter(e.target.value)}
+        >
+          <option value="All">All</option>
+          <option value="Food Processing">Food Processing</option>
+          <option value="Out for delivery">Out for delivery</option>
+          <option value="Delivered">Delivered</option>
+        </select>
+    </div>
       <div className="order-list">
-        {orders.map((order, index) => (
+        {orders.filter(order => statusFilter === "All" || order.status === statusFilter)
+  .map((order, index) => (
           <div key={index} className="order-item">
             <img src={assets.parcel_icon} alt="" />
             <div>
