@@ -28,11 +28,13 @@ const MyOrders = () => {
     <div className="my-orders">
       <h2>Orders</h2>
       <div className="container">
-        {data.map((order, index) => {
+        
+        {data.length>0?(data.map((order, index) => {
           return (
             <div key={index} className="my-orders-order">
               <img src={assets.parcel_icon} alt="" />
               <p>
+                
                 {order.items.map((item, index) => {
                   if (index === order.items.length - 1) {
                     return item.name + " X " + item.quantity;
@@ -50,7 +52,9 @@ const MyOrders = () => {
               <button onClick={fetchOrders}>Track Order</button>
             </div>
           );
-        })}
+        })) :(<>
+        <p className="noordersyet">No orders yet</p>
+        </>)}
       </div>
     </div>
   );

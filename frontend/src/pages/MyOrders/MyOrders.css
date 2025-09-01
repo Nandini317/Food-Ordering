@@ -20,6 +20,7 @@
 .my-orders-order img{
     width: 50px;
 }
+
 .my-orders-order p span{
     color: tomato;
 }
@@ -34,6 +35,13 @@
     background-color: #ffe1e1;
     cursor: pointer;
     color: #454545;
+}
+.noordersyet {
+    text-align: center;
+    color: #888;
+    font-size: 18px;
+    margin: 40px 0;
+    letter-spacing: 1px;
 }
 @media (max-width:900px) {
     .my-orders-order{
