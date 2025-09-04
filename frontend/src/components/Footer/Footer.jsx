@@ -22,15 +22,19 @@ const Footer = () => {
           <h2>Company</h2>
           <ul>
             <li></li>
-            <li><a href="#explore-menu">Menu</a></li>
+            
             <li>Privacy Policy</li>
           </ul>
         </div>
         <div className="footer-content-right">
           <h2>Get in touch</h2>
           <ul>
-            <li>+92-452-4648456</li>
-            <li>contact@OrderEase.com</li>
+            <li><p>Phone: <a href="tel:+1234567890">+1 234 567 890</a></p></li>
+            <li><p>Email:<a
+                href="https://mail.google.com/mail/?view=cm&fs=1&to=orderease@gmail.com"
+                target="_blank"
+                rel="noopener noreferrer">orderease@gmail.com</a>
+              </p></li>
           </ul>
         </div>
       </div>

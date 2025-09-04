@@ -43,13 +43,13 @@ const Navbar = ({ setShowLogin }) => {
           Orders
         </Link>
         
-        <a
-          href="#footer"
+        <Link
+          to="/contactus"
           onClick={() => setMenu("contact-us")}
           className={menu === "contact-us" ? "active" : ""}
         >
           contact us
-        </a>
+        </Link>
 
         
         
