@@ -3,6 +3,8 @@ import Navbar from "./components/Navbar/Navbar";
 import Sidebar from "./components/Sidebar/Sidebar";
 import { Route, Routes } from "react-router-dom";
 import Add from "./pages/Add/Add";
+import Feedbacks from "./pages/Feedbacks/Feedbacks";
+import FeedbackDetail from "./pages/Feedbacks/FeedbackDetail" 
 import List from "./pages/List/List";
 import Orders from "./pages/Orders/Orders";
 import { ToastContainer } from "react-toastify";
@@ -10,7 +12,6 @@ import "react-toastify/dist/ReactToastify.css";
 import Login from "./components/Login/Login";
 
 const App = () => {
-  //const url = "https://food-delivery-backend-5b6g.onrender.com";
   const url = "http://localhost:4000"
   return (
     <div>
@@ -26,6 +27,8 @@ const App = () => {
           <Route path="/add" element={<Add url={url}/>} />
           <Route path="/list" element={<List url={url}/>} />
           <Route path="/orders" element={<Orders url={url}/>} />
+          <Route path="/feedbacks" element = {<Feedbacks url={url}/>} />
+          <Route path="/admin/feedbacks/:id" element={<FeedbackDetail url={url} />} />
         </Routes>
       </div>
     </div>

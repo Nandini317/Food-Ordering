@@ -1,0 +1,103 @@
+.feedback-detail {
+    max-width: 1200px;   /* wider layout */
+  width: 95%;   /* wider for desktop */
+  margin: 50px auto;
+  padding: 0 30px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  color: #2c3e50;
+}
+
+/* Header with back button + title */
+.feedback-header {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  margin-bottom: 30px;
+}
+
+.feedback-header h2 {
+  font-size: 1.8rem;
+  font-weight: 600;
+  margin: 0;
+  color: #34495e;
+}
+
+.back-btn {
+  background: #4a90e2;
+  color: #fff;
+  border: none;
+  border-radius: 22px;
+  padding: 8px 18px;
+  font-size: 0.9rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+
+.back-btn:hover {
+  background: #357abd;
+  transform: translateY(-1px);
+}
+
+/* Feedback card container */
+.feedback-card {
+  background: #fff;
+  padding: 36px;
+  border-radius: 14px;
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.07);
+  border: 1px solid #f0f0f0;
+}
+
+/* Each item */
+.feedback-item {
+  margin-bottom: 28px;
+}
+
+.feedback-item:last-child {
+  margin-bottom: 0;
+}
+
+/* Label & Value styles */
+.label {
+  display: block;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: #777;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+.value {
+  font-size: 1 rem;
+  color: #2c3e50;
+  font-weight: 300;
+}
+
+/* Special style for message box */
+.value.message {
+  background: #f9fafc;
+  padding: 16px 20px;
+  border-radius: 10px;
+  border: 1px solid #e0e0e0;
+  line-height: 1.6;
+  white-space: pre-wrap; /* keeps line breaks */
+  font-weight: normal;
+}
+
+/* Loading & Error States */
+.loading,
+.error {
+  text-align: center;
+  padding: 24px;
+  font-weight: 300;
+}
+
+.loading {
+  color: #4a90e2;
+  font-style: italic;
+}
+
+.error {
+  color: #e74c3c;
+}

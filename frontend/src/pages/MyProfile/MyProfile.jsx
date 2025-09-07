@@ -77,7 +77,8 @@ const MyProfile = () => {
       <h2>My Profile</h2>
       <div className="profile-card">
         <img
-          src={`https://ui-avatars.com/api/?name=${user?.name || 'Guest'}`}
+          // src={`https://ui-avatars.com/api/?name=${user?.name || 'Guest'}`}
+          src = "./user.png"
           alt="Profile"
           className="profile-avatar"
         />

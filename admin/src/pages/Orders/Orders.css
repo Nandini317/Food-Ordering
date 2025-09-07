@@ -1,42 +1,224 @@
-.order-item{
-    display: grid;
-    grid-template-columns: 0.5fr 2fr 1fr 1fr 1fr;
-    align-items: start;
-    gap: 30px;
-    border: 1px solid tomato;
-    padding: 20px;
-    margin: 30px 0px;
-    font-size: 14px;
-    color: #505050;
+/* Page container */
+.order {
+  max-width: 1200px;
+  width : 95% ;
+
+  margin: 0 auto;
+  padding: 20px;
 }
-.order-item-food, .order-item-name{
-    font-weight: 600;
+
+.order h3 {
+  font-size: 22px;
+  margin-bottom: 12px;
+  color: #222;
 }
-.order-item-name{
-    margin-top: 30px;
-    margin-bottom: 5px;
+
+/* ---------- Filter bar (new) ---------- */
+.filter-bar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 18px;
 }
-.order-item-address{
-    margin-bottom: 10px;
+
+.filter-label {
+  font-weight: 600;
+  color: #333;
+  margin-right: 4px;
 }
-.order-item select{
-    background-color: #ffe8e4;
-    border: 1px solid tomato;
-    width: max(11vw,120px);
-    padding: 10px;
-    outline: none;
+
+.filter-chip {
+  border: 1px solid #ddd;
+  background: #fff;
+  border-radius: 999px;
+  padding: 6px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s ease, border-color 0.15s ease, transform 0.05s ease;
 }
-@media (max-width:1000px) {
-    .order-item{
-        font-size: 12px;
-        grid-template-columns: 0.5fr 2fr 1fr;
-        padding: 15px 8px;
-    }
-    .order-item select{
-        padding: 5px;
-        font-size: 12px;
-    }
-    .order-item img{
-        width: 40px;
-    }
+
+.filter-chip:hover {
+  background: #f7f7f7;
+  border-color: #cfcfcf;
+}
+
+.filter-chip:active {
+  transform: translateY(1px);
+}
+
+.filter-chip.active {
+  border-color: #222;
+  background: #222;
+  color: #fff;
+}
+
+.filter-chip .chip-count {
+  margin-left: 6px;
+  font-weight: 600;
+  opacity: 0.9;
+}
+
+/* ---------- List ---------- */
+.order-list {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+/* ---------- Order Card (layout revamped) ---------- */
+.order-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 20px;
+  border: 1px solid #e7e7e7;
+  border-radius: 12px;
+  padding: 18px 20px;
+  background: #fff;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.04);
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+}
+
+.order-item:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px rgba(0,0,0,0.08);
+}
+
+/* Left */
+.order-item-left {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+  flex: 1 1 auto;
+  min-width: 0; /* allow text to wrap nicely */
+}
+
+.order-item img {
+  width: 56px;
+  height: 56px;
+  object-fit: cover;
+  border-radius: 8px;
+  flex: 0 0 auto;
+}
+
+.order-item-details {
+  display: grid;
+  gap: 6px;
+}
+
+/* Food line (items list) */
+.order-item-food {
+  font-weight: 600;
+  color: #1f2937;
+  line-height: 1.35;
+}
+
+/* Customer name */
+.order-item-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111827;
+}
+
+/* Address (rebuilt) */
+.order-item-address {
+  border: 1px solid #eee;
+  background: #fafafa;
+  border-radius: 8px;
+  padding: 8px 10px;
+  color: #4b5563;
+  font-size: 13px;
+  line-height: 1.5;
+}
+
+.order-item-address p {
+  margin: 0;
+}
+
+.order-item-phone {
+  font-size: 13px;
+  color: #374151;
+}
+
+/* Right */
+.order-item-right {
+  display: grid;
+  gap: 8px;
+  align-items: end;
+  justify-items: end;
+  min-width: 180px;
+}
+
+.order-item-meta {
+  font-size: 13px;
+  color: #6b7280;
+}
+
+.order-item-price {
+  font-size: 16px;
+  font-weight: 700;
+  color: #111827;
+}
+
+/* Status badge (new) */
+.status-badge {
+  display: inline-block;
+  padding: 4px 10px;
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid transparent;
+}
+
+.status-processing { background: #fff7ed; color: #9a3412; border-color: #fed7aa; }
+.status-out        { background: #eff6ff; color: #1d4ed8; border-color: #bfdbfe; }
+.status-delivered  { background: #ecfdf5; color: #047857; border-color: #a7f3d0; }
+
+/* Update select */
+.status-select {
+  background: #f9f9f9;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  padding: 8px 10px;
+  font-size: 13px;
+  cursor: pointer;
+  min-width: 170px;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.status-select:hover,
+.status-select:focus {
+  background: #f3f4f6;
+  border-color: #9ca3af;
+}
+
+/* Empty state */
+.empty {
+  text-align: center;
+  padding: 40px 0;
+  color: #6b7280;
+  border: 1px dashed #e5e7eb;
+  border-radius: 12px;
+  background: #fafafa;
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 768px) {
+  .order-item {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .order-item-right {
+    grid-template-columns: 1fr 1fr;
+    justify-items: stretch;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+  }
+
+  .status-select {
+    width: 100%;
+  }
 }

@@ -10,12 +10,28 @@
 .navbar .profile{
     width: 40px;
 }
-.login-conditon{
-    font-size: 20px;
-    cursor: pointer;
+.login-conditon {
+  font-size: 16px;
+  font-weight: 500;
+  color: #fff;
+  background-color: #f07049; /* softer orange */
+  padding: 8px 20px;
+  border: none;
+  border-radius: 8px; /* softer curve */
+  cursor: pointer;
+  transition: background-color 0.2s ease, transform 0.1s ease;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08); /* subtle shadow */
+  outline: none;
+  margin-right: 16px;
+  letter-spacing: 0.4px;
 }
 
-.login-conditon:hover{
-    color : rgb(199, 54, 28)
-    
+.login-conditon:hover {
+  background-color: #f4511e; /* slightly darker */
+  transform: translateY(-1px);
+}
+
+.login-conditon:active {
+  transform: translateY(0);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
 }

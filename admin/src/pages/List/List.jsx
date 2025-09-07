@@ -6,9 +6,9 @@ import { useContext } from "react";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
 
-const List = ({ url }) => {
+const List = () => {
   const navigate = useNavigate();
-  const { token,admin } = useContext(StoreContext);
+  const { token,admin ,url , loading } = useContext(StoreContext);
   const [categoryFilter, setCategoryFilter] = useState("All");
   const [list, setList] = useState([]);
 
@@ -40,12 +40,13 @@ const List = ({ url }) => {
 };
 
   useEffect(() => {
+    if(loading) return ; 
     if (!admin && !token) {
       toast.error("Please Login First");
       navigate("/");
     }
     fetchList();
-  }, []);
+  }, [admin , token , loading , navigate ]);
 
   return (
     <div className="list add flex-col">
