@@ -6,7 +6,7 @@ import FoodItem from "../FoodItem/FoodItem";
 const FoodDisplay = ({ category }) => {
   const { food_list } = useContext(StoreContext);
 
-  const ITEMS_PER_PAGE = 12; // items to render initially
+  const ITEMS_PER_PAGE = 8; // items to render initially
   const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
 
   const filteredList = food_list.filter(
@@ -19,7 +19,7 @@ const FoodDisplay = ({ category }) => {
 
   return (
     <div className="food-display" id="food-display">
-      <h2>Top dishes near you</h2>
+      <h2>Meals You’ll Love</h2>
       <div className="food-display-list">
         {filteredList.slice(0, visibleCount).map((item) => (
           <FoodItem
