@@ -203,6 +203,20 @@
   background: #fafafa;
 }
 
+.load-more-btn {
+  display: block;
+  margin: 30px auto 0 auto;
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  background: #111827;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background 0.15s ease, transform 0.05s ease;
+}
+
 /* ---------- Responsive ---------- */
 @media (max-width: 768px) {
   .order-item {

@@ -3,6 +3,9 @@ import "./MyOrders.css";
 import { StoreContext } from "../../context/StoreContext";
 import axios from "axios";
 import { assets } from "../../assets/frontend_assets/assets";
+import { io } from "socket.io-client";
+
+const socket = io("http://localhost:4000");
 
 const MyOrders = () => {
   const { url, token } = useContext(StoreContext);
@@ -37,6 +40,21 @@ const MyOrders = () => {
     if (token) fetchOrders();
   }, [token]);
 
+
+  useEffect(() => {
+    socket.on("orderUpdated", (updatedOrder) => {
+      setData((prevOrders) =>
+        prevOrders.map((order) =>
+          order._id === updatedOrder._id ? updatedOrder : order
+        )
+      );
+    });
+
+    return () => {
+      socket.off("orderUpdated");
+    };
+  }, []);
+
   // Apply filters
   const filteredData = data
     .filter(order =>
@@ -62,9 +80,11 @@ const MyOrders = () => {
 
   return (
     <div className="my-orders">
-      <h2>My Orders</h2>
+  <h2>My Orders</h2>
 
-      {/* Filter Section */}
+  {filteredData.length > 0 ? (
+    <>
+      {/* ✅ Filters only visible if there are orders */}
       <div className="filter-container">
         <label>Status:</label>
         <select
@@ -89,32 +109,41 @@ const MyOrders = () => {
         </button>
       </div>
 
+      {/* Orders List */}
       <div className="container">
-        {filteredData.length > 0 ? (
-          filteredData.map((order, index) => (
-            <div key={index} className="my-orders-order">
-              <img src={assets.parcel_icon} alt="" />
-              <p>
-                {order.items.map((item, idx) => `${item.name} X ${item.quantity}`).join(", ")}
-              </p>
-              <p>${order.amount.toFixed(2)}</p>
-              <p>Items: {order.items.length}</p>
-              <p>
-                <span
-                  className="status-badge"
-                  
-                >
-                  {order.status}
-                </span>
-              </p>
-              <button onClick={fetchOrders}>Track Order</button>
-            </div>
-          ))
-        ) : (
-          <p className="noordersyet">No orders yet</p>
-        )}
+        {filteredData.map((order, index) => (
+          <div key={index} className="my-orders-order">
+            <img src={assets.parcel_icon} alt="" />
+            <p>
+              {order.items
+                .map((item, idx) => `${item.name} X ${item.quantity}`)
+                .join(", ")}
+            </p>
+            <p>${order.amount.toFixed(2)}</p>
+            <p>Items: {order.items.length}</p>
+            <p>
+              <span className="status-badge">{order.status}</span>
+            </p>
+            <button onClick={fetchOrders}>Track Order</button>
+          </div>
+        ))}
       </div>
+    </>
+  ) : (
+    // ✅ Empty state when no orders
+    <div className="empty-orders">
+      <img
+        src="./overload.png"
+        alt="No Orders"
+        className="empty-orders-img"
+      />
+      <h3>Nothing cooking yet 🔥🍳</h3>
+      <p>Place your first order and let the feast begin!</p>
+      <button onClick={() => window.location.href = "/"}>Order Now</button>
     </div>
+  )}
+</div>
+
   );
 };
 

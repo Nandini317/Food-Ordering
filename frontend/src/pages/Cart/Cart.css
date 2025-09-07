@@ -91,3 +91,41 @@
         padding-left: 10px;
     }
 }
+
+
+.empty-cart {
+  text-align: center;
+  padding: 40px;
+}
+
+.empty-cart-img {
+  width: 200px;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+.empty-cart button {
+    font-size: 16px;
+  margin-top: 20px;
+  padding: 10px 20px;
+  background: #ff3b2e;;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.cart-heading{
+    margin-bottom: 10px;
+}
+.empty-cart p{
+    font-size: 20px;
+    font-weight: 500;
+}
+
+.empty-cart button:hover {
+  background: #ff3b2e;
+    transform: scale(1.05);
+}

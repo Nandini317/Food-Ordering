@@ -109,6 +109,46 @@
     letter-spacing: 1px;
 }
 
+.empty-orders {
+  text-align: center;
+  padding: 50px;
+}
+
+.empty-orders-img {
+  width: 220px;
+  margin-bottom: 20px;
+  opacity: 0.9;
+}
+
+.empty-orders h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #ff3b2e;
+}
+
+.empty-orders p {
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.empty-orders button {
+  padding: 10px 20px;
+  background: #ff3b2e;
+  border: none;
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: 0.3s;
+}
+
+.empty-orders button:hover {
+  background: #ff3b2e;
+    transform: scale(1.05);
+    font-size: 16px;
+}
+
+
 /* Responsive */
 @media (max-width:900px) {
     .my-orders-order{

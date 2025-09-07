@@ -12,3 +12,14 @@
     gap: 30px;
     row-gap: 50px;
 }
+.load-more-btn{
+    display: block;
+    margin: 40px auto;
+    padding: 10px 30px;
+    font-size: 18px;
+    background-color: #ff5722;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}

@@ -6,6 +6,9 @@ import { assets } from "../../assets/assets";
 import { StoreContext } from "../../context/StoreContext";
 import { useNavigate } from "react-router-dom";
 
+import { io } from "socket.io-client";
+const socket = io("http://localhost:4000");
+
 const STATUS_OPTIONS = ["All", "Food Processing", "Out for delivery", "Delivered"];
 
 const titleCase = (str = "") =>
@@ -23,7 +26,7 @@ const formatAddress = (a = {}) => {
 const statusClass = (s) => {
   if (s === "Delivered") return "status-delivered";
   if (s === "Out for delivery") return "status-out";
-  return "status-processing"; // Food Processing or anything else
+  return "status-processing";
 };
 
 const Orders = () => {
@@ -31,6 +34,10 @@ const Orders = () => {
   const navigate = useNavigate();
   const { token, admin, url, loading } = useContext(StoreContext);
   const [orders, setOrders] = useState([]);
+
+  // Lazy loading
+  const ORDERS_PER_PAGE = 6;
+  const [visibleCount, setVisibleCount] = useState(ORDERS_PER_PAGE);
 
   const fetchAllOrder = async () => {
     const response = await axios.get(url + "/api/order/list", {
@@ -60,10 +67,21 @@ const Orders = () => {
       navigate("/");
       return;
     }
-    fetchAllOrder();
-  }, [admin , token , loading ,navigate]);
 
-  // counts for chips
+    fetchAllOrder();
+    socket.on("newOrder", (newOrder) => {
+      setOrders((prev) => {
+        if (prev.some((o) => o._id === newOrder._id)) return prev;
+        return [newOrder, ...prev];
+      });
+      toast.info("🚀 New order received!");
+    });
+
+    return () => {
+      socket.off("newOrder");
+    };
+  }, [admin, token, loading, navigate]);
+
   const statusCounts = useMemo(() => {
     const counts = { All: orders.length, "Food Processing": 0, "Out for delivery": 0, Delivered: 0 };
     orders.forEach((o) => {
@@ -72,23 +90,29 @@ const Orders = () => {
     return counts;
   }, [orders]);
 
-  const visibleOrders = useMemo(
+  const filteredOrders = useMemo(
     () => orders.filter((o) => statusFilter === "All" || o.status === statusFilter),
     [orders, statusFilter]
   );
+
+  const visibleOrders = filteredOrders.slice(0, visibleCount);
+
+  const loadMore = () => setVisibleCount((prev) => prev + ORDERS_PER_PAGE);
 
   return (
     <div className="order">
       <h3>Order Page</h3>
 
-      {/* Filter Bar (chips with counts) */}
       <div className="filter-bar">
         <span className="filter-label">Filter by Status:</span>
         {STATUS_OPTIONS.map((s) => (
           <button
             key={s}
             className={`filter-chip ${statusFilter === s ? "active" : ""}`}
-            onClick={() => setStatusFilter(s)}
+            onClick={() => {
+              setStatusFilter(s);
+              setVisibleCount(ORDERS_PER_PAGE); // reset visibleCount when filter changes
+            }}
             type="button"
           >
             {s} <span className="chip-count">{statusCounts[s] ?? 0}</span>
@@ -96,7 +120,6 @@ const Orders = () => {
         ))}
       </div>
 
-      {/* List */}
       <div className="order-list">
         {visibleOrders.length === 0 && (
           <div className="empty">No orders found for this filter.</div>
@@ -108,36 +131,28 @@ const Orders = () => {
             titleCase(`${order.address.firstName || ""} ${order.address.lastName || ""}`);
 
           return (
-            <div key={order._id || order.id} className="order-item">
-              {/* Left */}
+            <div key={order._id} className="order-item">
               <div className="order-item-left">
                 <img src={assets.parcel_icon} alt="Order" />
                 <div className="order-item-details">
                   <p className="order-item-food">
-                    {order.items
-                      .map((it) => `${it.name} x ${it.quantity}`)
-                      .join(", ")}
+                    {order.items.map((it) => `${it.name} x ${it.quantity}`).join(", ")}
                   </p>
-
                   <p className="order-item-name">{customer}</p>
-
                   <div className="order-item-address">
                     {line1 && <p>📍 {line1}</p>}
                     {line2 && <p>{line2}</p>}
                   </div>
-
                   {order.address.phone && (
                     <p className="order-item-phone">📞 {order.address.phone}</p>
                   )}
                 </div>
               </div>
 
-              {/* Right */}
               <div className="order-item-right">
                 <span className={`status-badge ${statusClass(order.status)}`}>
                   {order.status}
                 </span>
-
                 <p className="order-item-meta">Items: {order.items.length}</p>
                 <p className="order-item-price">${order.amount}</p>
 
@@ -154,9 +169,16 @@ const Orders = () => {
             </div>
           );
         })}
+
+        {visibleCount < filteredOrders.length && (
+          <button onClick={loadMore} className="load-more-btn">
+            Load More
+          </button>
+        )}
       </div>
     </div>
   );
 };
 
 export default Orders;
+
