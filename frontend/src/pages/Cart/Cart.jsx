@@ -13,8 +13,21 @@ const Cart = () => {
     getTotalCartAmount,
     url
   } = useContext(StoreContext);
+  const totalAmount = getTotalCartAmount();
 
   const navigate=useNavigate();
+
+  if (totalAmount === 0) {
+    return (
+      <div className="cart empty-cart">
+        <img src="./empty-cart.png"
+        alt="Empty Cart" className="empty-cart-img" />
+        <h2 className="cart-heading">Your cart is empty 😢</h2>
+        <p>Cart’s starving harder than you right now !! </p>
+        <button onClick={() => navigate("/")}>Shop Now</button>
+      </div>
+    );
+  }
 
   return (
     <div className="cart">

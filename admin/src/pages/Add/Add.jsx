@@ -9,10 +9,10 @@ import { StoreContext } from "../../context/StoreContext";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 
-const Add = ({ url }) => {
+const Add = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { token, admin } = useContext(StoreContext);
+  const { token, admin ,url , loading} = useContext(StoreContext);
   const [image, setImage] = useState(false);
   const [data, setData] = useState({
     name: "",
@@ -107,26 +107,15 @@ const Add = ({ url }) => {
     toast.error("Something went wrong");
   }
 
-    // const response = await axios.post(`${url}/api/food/add`, formData, { headers: { token } });
-    // if (response.data.success) {
-    //   setData({
-    //     name: "",
-    //     description: "",
-    //     price: "",
-    //     category: "Salad",
-    //   });
-    //   setImage(false);
-    //   toast.success(response.data.message);
-    // } else {
-    //   toast.error(response.data.message);
-    // }
+    
   };
   useEffect(() => {
+    if (loading) return; 
     if (!admin && !token) {
       toast.error("Please Login First");
       navigate("/");
     }
-  }, [])
+  }, [admin , token , loading , navigate])
   return (
     <div className="add">
       <form onSubmit={onSubmitHandler} className="flex-col">

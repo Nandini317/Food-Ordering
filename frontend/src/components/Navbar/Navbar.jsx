@@ -27,23 +27,32 @@ const Navbar = ({ setShowLogin }) => {
           onClick={() => setMenu("home")}
           className={menu === "home" ? "active" : ""}
         >
-          home
+          Home
         </Link>
-        <a
+        {/* <a
           href="#explore-menu"
           onClick={() => setMenu("menu")}
           className={menu === "menu" ? "active" : ""}
         >
           menu
-        </a>
+        </a> */}
+        <Link to="/myorders" 
+        onClick={() => setMenu("orders")}
+          className={menu === "orders" ? "active" : ""}
+        >
+          Orders
+        </Link>
         
-        <a
-          href="#footer"
+        <Link
+          to="/contactus"
           onClick={() => setMenu("contact-us")}
           className={menu === "contact-us" ? "active" : ""}
         >
           contact us
-        </a>
+        </Link>
+
+        
+        
       </ul>
       <div className="navbar-right">
         {/* <img src={assets.search_icon} alt="" /> */}
@@ -59,7 +68,7 @@ const Navbar = ({ setShowLogin }) => {
           <div className="navbar-profile">
             <img src={assets.profile_icon} alt="" />
             <ul className="nav-profile-dropdown">
-              <li onClick={()=>navigate("/myorders")}><img src={assets.bag_icon} alt="" /><p>Orders</p></li>
+              <li onClick={()=>navigate("/myprofile")}><img src={assets.bag_icon} alt="" /><p>Profile</p></li>
               <hr />
               <li onClick={logout}><img src={assets.logout_icon} alt="" /><p>Logout</p></li>
             </ul>

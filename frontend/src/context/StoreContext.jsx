@@ -7,10 +7,11 @@ export const StoreContext = createContext(null);
 
 const StoreContextProvider = (props) => {
   const [cartItems, setCartItems] = useState({});
-  const url = "https://orderease-backend.onrender.com"
-  //const url = "http://localhost:4000";
+  
+  const url = "http://localhost:4000";
   const [token, setToken] = useState("");
   const [food_list, setFoodList] = useState([]);
+  const [user, setUser] = useState(null);
 
   const addToCart = async (itemId) => {
     if (!cartItems[itemId]) {
@@ -61,7 +62,7 @@ const StoreContextProvider = (props) => {
 
   const fetchFoodList = async () => {
     const response = await axios.get(url+"/api/food/list");
-    console.log("the response i s" + response.data);
+    console.log("the response i s" + response);
     if (response.data.success) {
       setFoodList(response.data.data);
     } else {
@@ -78,12 +79,24 @@ const StoreContextProvider = (props) => {
     setCartItems(response.data.cartData);
   };
 
+  const fetchUser = async (token) => {
+  try {
+    const response = await axios.get(url + "/api/user/profile", { headers: { token } });
+    if (response.data.success) {
+      setUser(response.data.data);
+    }
+  } catch (error) {
+    console.log("Error fetching user profile", error);
+  }
+};
+
   useEffect(() => {
     async function loadData() {
       await fetchFoodList();
       if (localStorage.getItem("token")) {
         setToken(localStorage.getItem("token"));
         await loadCardData(localStorage.getItem("token"));
+        await fetchUser(localStorage.getItem("token"));
       }
     }
     loadData();
@@ -99,6 +112,8 @@ const StoreContextProvider = (props) => {
     url,
     token,
     setToken,
+    user,
+  setUser,
   };
   return (
     <StoreContext.Provider value={contextValue}>

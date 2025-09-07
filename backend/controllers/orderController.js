@@ -1,13 +1,14 @@
 import orderModel from "../models/orderModel.js";
 import userModel from "../models/userModel.js";
 import Stripe from "stripe";
+import { io } from "../server.js";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // placing user order for frontend
 const placeOrder = async (req, res) => {
-  const frontend_url = "https://orderease-frontend.onrender.com/";
-  //const frontend_url = "http://localhost:5173"
+ 
+  const frontend_url = "http://localhost:5173"
   try {
     const newOrder = new orderModel({
       userId: req.body.userId,
@@ -59,7 +60,10 @@ const verifyOrder = async (req, res) => {
   const { orderId, success } = req.body;
   try {
     if (success == "true") {
-      await orderModel.findByIdAndUpdate(orderId, { payment: true });
+      const updatedOrder = await orderModel.findByIdAndUpdate(orderId, { payment: true });
+     
+      io.emit("newOrder", updatedOrder);
+      
       res.json({ success: true, message: "Paid" });
     } else {
       await orderModel.findByIdAndDelete(orderId);
@@ -74,7 +78,7 @@ const verifyOrder = async (req, res) => {
 // user orders for frontend
 const userOrders = async (req, res) => {
   try {
-    const orders = await orderModel.find({ userId: req.body.userId });
+    const orders = await orderModel.find({ userId: req.body.userId }).sort({ createdAt: -1 });
     res.json({ success: true, data: orders });
   } catch (error) {
     console.log(error);
@@ -87,7 +91,7 @@ const listOrders = async (req, res) => {
   try {
     let userData = await userModel.findById(req.body.userId);
     if (userData && userData.role === "admin") {
-      const orders = await orderModel.find({});
+      const orders = await orderModel.find({}).sort({ createdAt: -1 });;
       res.json({ success: true, data: orders });
     } else {
       res.json({ success: false, message: "You are not admin" });
@@ -98,22 +102,38 @@ const listOrders = async (req, res) => {
   }
 };
 
-// api for updating status
+
+
+
 const updateStatus = async (req, res) => {
   try {
     let userData = await userModel.findById(req.body.userId);
+
     if (userData && userData.role === "admin") {
-      await orderModel.findByIdAndUpdate(req.body.orderId, {
-        status: req.body.status,
+      const updatedOrder = await orderModel.findByIdAndUpdate(
+        req.body.orderId,
+        { status: req.body.status },
+        { new: true } // return updated doc
+      );
+
+      // ✅ broadcast to all clients
+      io.emit("orderUpdated", updatedOrder);
+
+      return res.json({
+        success: true,
+        message: "Status Updated Successfully",
+        data: updatedOrder,
       });
-      res.json({ success: true, message: "Status Updated Successfully" });
-    }else{
-      res.json({ success: false, message: "You are not an admin" });
+    } else {
+      return res.json({ success: false, message: "You are not an admin" });
     }
   } catch (error) {
     console.log(error);
     res.json({ success: false, message: "Error" });
   }
 };
+
+export default updateStatus;
+
 
 export { placeOrder, verifyOrder, userOrders, listOrders, updateStatus };

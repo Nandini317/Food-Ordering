@@ -1,0 +1,62 @@
+.admin-feedbacks {
+  max-width: 1200px;   /* wider layout */
+  width: 95%;
+  margin: 40px auto;
+  padding: 32px;
+  background: #fff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  overflow-x: auto; /* keep responsive */
+}
+
+.admin-feedbacks h2 {
+  margin-bottom: 20px;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.admin-feedbacks table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 10px;
+  overflow: hidden;
+}
+
+.admin-feedbacks th,
+.admin-feedbacks td {
+  padding: 14px 18px;
+  text-align: left;
+  font-size: 0.95rem;
+  color: #333;
+}
+
+.admin-feedbacks th {
+  background: #f8f9fb;
+  font-weight: 600;
+  color: #444;
+}
+
+.admin-feedbacks tr:nth-child(even) {
+  background: #fafafa;
+}
+
+.admin-feedbacks tr:hover {
+  background: #f1f6ff;
+}
+
+.view-btn {
+  background: #4a90e2;
+  border: none;
+  padding: 8px 14px;
+  border-radius: 6px;
+  color: white;
+  font-size: 0.9rem;
+  cursor: pointer;
+  transition: 0.2s ease;
+}
+
+.view-btn:hover {
+  background: #357abd;
+}

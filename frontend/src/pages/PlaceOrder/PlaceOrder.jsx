@@ -49,6 +49,7 @@ const PlaceOrder = () => {
       const {session_url}=response.data;
       window.location.replace(session_url);
     }else{
+      orderItems.pop() ; 
       toast.error("Errors!")
     }
   };
@@ -142,7 +143,7 @@ const PlaceOrder = () => {
           name="phone"
           value={data.phone}
           onChange={onChangeHandler}
-          type="text"
+          type="tel"
           placeholder="Phone"
         />
       </div>
