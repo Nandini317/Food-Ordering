@@ -20,7 +20,6 @@ const loginUser = async (req, res) => {
     const token = createToken(user._id);
     res.json({ success: true, token,role });
   } catch (error) {
-    console.log(error);
     res.json({ success: false, message: "Error" });
   }
 };
@@ -78,8 +77,7 @@ const registerUser = async (req, res) => {
 
 const getUserProfile = async (req, res) => {
   try {
-    console.log('in userprofile backend ');
-    console.log("user id is " , req.user._id) ;
+    
     const user = await userModel.findById(req.user._id).select("-password");
     console.log(user) ; 
     if (user) {
