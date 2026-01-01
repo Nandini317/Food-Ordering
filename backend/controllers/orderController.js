@@ -102,9 +102,6 @@ const listOrders = async (req, res) => {
   }
 };
 
-
-
-
 const updateStatus = async (req, res) => {
   try {
     let userData = await userModel.findById(req.body.userId);
